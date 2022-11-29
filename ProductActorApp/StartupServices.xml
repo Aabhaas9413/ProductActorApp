@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StartupServicesManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="ProductAPI_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="ProsuctActorServiceActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="ProsuctActorServiceActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ProsuctActorServiceActorService_TargetReplicaSetSize" DefaultValue="3" />
+  </Parameters>
+  <Services>
+    <!-- The section below creates instances of service types, when an instance of this 
+         application type is created. You can also create one or more instances of service type using the 
+         ServiceFabric PowerShell module.
+
+         The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
+    <Service Name="ProductAPI" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="ProductAPIType" InstanceCount="[ProductAPI_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="ProsuctActorServiceActorService" GeneratedIdRef="b384301c-4c3e-480e-9d63-da0e09be44c5|Persisted">
+      <StatefulService ServiceTypeName="ProsuctActorServiceActorServiceType" TargetReplicaSetSize="[ProsuctActorServiceActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ProsuctActorServiceActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[ProsuctActorServiceActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+  </Services>
+</StartupServicesManifest>
